@@ -1,6 +1,8 @@
 # Gomoku
 Gomoku assignment
 
+This is our Gomoku project for CMPUT-496
+
 Developers:
-	walkerp
-	dmcrorie
+	Walker P
+	Dustin M
