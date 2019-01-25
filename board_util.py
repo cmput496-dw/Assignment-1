@@ -87,7 +87,7 @@ def coord_to_point(row, col, boardsize):
 class GoBoardUtil(object):
     
     @staticmethod
-    def generate_legal_moves(board, color):
+    def generate_legal_moves(board):
         """
         generate a list of all legal moves on the board.
         Does not include the Pass move.
@@ -102,7 +102,7 @@ class GoBoardUtil(object):
         moves = board.get_empty_points()
         legal_moves = []
         for move in moves:
-            if board.is_legal(move, color):
+            if board.is_legal(move):
                 legal_moves.append(move)
         return legal_moves
             

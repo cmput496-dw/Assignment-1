@@ -201,7 +201,15 @@ class GtpConnection():
 
     def gogui_rules_legal_moves_cmd(self, args):
         """ Implement this function for Assignment 1 """
-        self.respond()
+        #board_color = args[0].lower()
+        #color = color_to_int(board_color)
+        moves = GoBoardUtil.generate_legal_moves(self.board)
+        gtp_moves = []
+        for move in moves:
+            coords = point_to_coord(move, self.board.size)
+            gtp_moves.append(format_point(coords))
+        sorted_moves = ' '.join(sorted(gtp_moves))
+        self.respond(sorted_moves)
         return
 
     def gogui_rules_side_to_move_cmd(self, args):
@@ -231,7 +239,7 @@ class GtpConnection():
             
     def gogui_rules_final_result_cmd(self, args):
         """ Implement this function for Assignment 1 """
-        self.respond("unknown")
+        self.respond("We are doing assignment 1")
 
     def play_cmd(self, args):
         """ Modify this function for Assignment 1 """
