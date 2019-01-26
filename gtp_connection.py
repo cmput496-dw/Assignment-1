@@ -249,6 +249,9 @@ class GtpConnection():
         try:
             board_color = args[0].lower()
             board_move = args[1]
+            if not board_color == 'w' and not board_color == 'b':
+                self.respond('illegal move: "' + board_color + '" wrong color')
+                return
             color = color_to_int(board_color)
             if args[1].lower() == 'pass':
                 self.board.play_move(PASS, color)
@@ -263,19 +266,22 @@ class GtpConnection():
                            .format(move, args[1]))
                 return
             if not self.board.play_move(move, color):
-                self.respond("Illegal Move: {}".format(board_move))
+                self.respond('illegal move: "{}" occupied'.format(board_move.lower()))
                 return
             else:
                 self.debug_msg("Move: {}\nBoard:\n{}\n".
                                 format(board_move, self.board2d()))
             self.respond()
         except Exception as e:
-            self.respond('Error: {}'.format(str(e)))
+            self.respond('{}'.format(str(e)))
 
     def genmove_cmd(self, args):
         """ Modify this function for Assignment 1 """
         """ generate a move for color args[0] in {'b','w'} """
         board_color = args[0].lower()
+        if not board_color == 'w' and not board_color == 'b':
+            self.respond('illegal move: "' + board_color + '" wrong color')
+            return
         color = color_to_int(board_color)
         move = self.go_engine.get_move(self.board, color)
         move_coord = point_to_coord(move, self.board.size)
@@ -382,7 +388,7 @@ def move_to_coord(point_str, board_size):
     except (IndexError, ValueError):
         raise ValueError("invalid point: '{}'".format(s))
     if not (col <= board_size and row <= board_size):
-        raise ValueError("point off board: '{}'".format(s))
+        raise ValueError('illegal move: "{}" wrong coordinate'.format(s))
     return row, col
 
 def color_to_int(c):
