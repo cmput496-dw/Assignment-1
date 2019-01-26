@@ -120,10 +120,12 @@ class GoBoardUtil(object):
             the color to generate the move for.
         """
         moves = board.get_empty_points()
+        if not moves:
+            return False
         np.random.shuffle(moves)
         for move in moves:
             legal = not (use_eye_filter and board.is_eye(move, color)) \
-                    and board.is_legal(move, color)
+                    and board.is_legal(move)
             if legal:
                 return move
         return PASS
