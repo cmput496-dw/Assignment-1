@@ -304,6 +304,11 @@ class GtpConnection():
             self.respond("pass")
         elif self.board.is_legal(move):
             self.board.play_move(move, color)
+            check = self.go_engine.get_move(self.board, color)
+            check_coord = point_to_coord(check, self.board.size)
+            check_as_string = format_point(check_coord)
+            if check == False:
+                self.game_status = "draw"
             self.respond(move_as_string)
         else:
             self.respond("Illegal move: {}".format(move_as_string))
