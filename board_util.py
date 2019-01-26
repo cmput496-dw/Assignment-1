@@ -120,7 +120,7 @@ class GoBoardUtil(object):
             the color to generate the move for.
         """
         moves = board.get_empty_points()
-        if not moves:
+        if not moves.any():
             return False
         np.random.shuffle(moves)
         for move in moves:
