@@ -28,7 +28,7 @@ class SimpleGoBoard(object):
         board_copy = self.copy()
         # Try to play the move on a temporary copy of board
         # This prevents the board from being messed up by the move
-        legal = board_copy.play_move(point)
+        legal = board_copy.play_move(point, BLACK)
         return legal
 
     def get_empty_points(self):
@@ -85,6 +85,27 @@ class SimpleGoBoard(object):
         for row in range(1, self.size + 1):
             start = self.row_start(row)
             board[start : start + self.size] = EMPTY
+
+    '''
+    search_for_five
+    -----------
+    traverses the board to find an ubroken chain of five in a row
+    '''
+
+    def search_for_five(self, point, color):
+        
+        trace1 = point
+        trace2 = point
+        count = 0
+        # check horizontally first
+        while (trace1 == color or trace2 == color):
+            if count == 5:
+                return True
+            #if trace1 == color:
+                
+            
+        
+        return
 
     def is_eye(self, point, color):
         """
@@ -160,7 +181,7 @@ class SimpleGoBoard(object):
                 single_capture = nb_point
         return single_capture
 
-    def play_move(self, point):
+    def play_move(self, point, color):
         """
         Play a move of color on point
         Returns boolean: whether move was legal
@@ -174,7 +195,7 @@ class SimpleGoBoard(object):
         # General case: deal with captures, suicide, and next ko point
         #oppColor = GoBoardUtil.opponent(color)
         #in_enemy_eye = self._is_surrounded(point, oppColor)
-        #self.board[point] = color
+        self.board[point] = color
         #single_captures = []
         #neighbors = self._neighbors(point)
         #for nb in neighbors:
