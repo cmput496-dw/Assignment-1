@@ -94,18 +94,21 @@ class SimpleGoBoard(object):
 
     def search_for_five(self, point, color):
         
-        trace1 = point
-        trace2 = point
+        trace1 = point - 1
+        trace2 = point + 1
         count = 0
         # check horizontally first
         while (trace1 == color or trace2 == color):
+            # trace in both directions
+            if trace1 == color:
+                count += 1
+                trace1 -= 1
+            if trace2 == color:
+                count += 1
+                trace2 += 1
             if count == 5:
                 return True
-            #if trace1 == color:
-                
-            
-        
-        return
+        return False
 
     def is_eye(self, point, color):
         """
@@ -189,7 +192,6 @@ class SimpleGoBoard(object):
         # Special cases
         if self.board[point] != EMPTY:
             return False
-
         
             
         # General case: deal with captures, suicide, and next ko point

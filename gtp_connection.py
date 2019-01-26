@@ -29,6 +29,7 @@ class GtpConnection():
         self._debug_mode = debug_mode
         self.go_engine = go_engine
         self.board = board
+        self.game_status = "ongoing"
         self.commands = {
             "protocol_version": self.protocol_version_cmd,
             "quit": self.quit_cmd,
@@ -180,7 +181,7 @@ class GtpConnection():
     Assignment 1 - game-specific commands start here
     ==========================================================================
     """
-
+    # game status: ongoing, draw, black, white
     def gogui_analyze_cmd(self, args):
         """ We already implemented this function for Assignment 1 """
         self.respond("pstring/Legal Moves For ToPlay/gogui-rules_legal_moves\n"
@@ -239,8 +240,15 @@ class GtpConnection():
             
     def gogui_rules_final_result_cmd(self, args):
         """ Implement this function for Assignment 1 """
-        self.respond("We are doing assignment 1")
-
+        if self.game_status == "ongoing":
+            self.respond("unknown")
+        elif self.game_status == "draw":
+            self.respond("draw")
+        elif self.game_status == "black":
+            self.respond("black")
+        elif self.game_status == "white":
+            self.respond("white")
+            
     def play_cmd(self, args):
         """ Modify this function for Assignment 1 """
         """
@@ -268,6 +276,12 @@ class GtpConnection():
             else:
                 self.debug_msg("Move: {}\nBoard:\n{}\n".
                                 format(board_move, self.board2d()))
+            #check to see if the move filled the board
+            move = self.go_engine.get_move(self.board, color)
+            move_coord = point_to_coord(move, self.board.size)
+            move_as_string = format_point(move_coord)
+            if move == False:
+                self.game_status = "draw"
             self.respond()
         except Exception as e:
             self.respond('Error: {}'.format(str(e)))
@@ -367,6 +381,7 @@ def move_to_coord(point_str, board_size):
     if not 2 <= board_size <= MAXSIZE:
         raise ValueError("board_size out of range")
     s = point_str.lower()
+    print(s)
     if s == "pass":
         return PASS
     try:
