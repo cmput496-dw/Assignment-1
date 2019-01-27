@@ -1,6 +1,6 @@
-# Gomoku
-This is our Gomoku project for CMPUT-496
+# Gomoku Project
+This is our Gomoku assignment for CMPUT-496
 
-##Developers
+## Developers
 Walker P. <br/>
 Dustin M.
