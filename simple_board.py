@@ -93,21 +93,84 @@ class SimpleGoBoard(object):
     '''
 
     def search_for_five(self, point, color):
-        
+
+        #Check Horizontally
         trace1 = point - 1
         trace2 = point + 1
-        count = 0
-        # check horizontally first
-        while (trace1 == color or trace2 == color):
+        count = 1
+        while (self.board[trace1] == color or self.board[trace2] == color):
             # trace in both directions
-            if trace1 == color:
+            if self.board[trace1] == color:
                 count += 1
                 trace1 -= 1
-            if trace2 == color:
+            if self.board[trace2] == color:
                 count += 1
                 trace2 += 1
-            if count == 5:
-                return True
+        if count >= 5:
+            return True
+
+        #Check Vertically
+        trace1 = point - self.NS
+        trace2 = point + self.NS
+        count = 1
+        while (self.board[trace1] == color or self.board[trace2] == color):
+            # trace in both directions
+            if self.board[trace1] == color:
+                count += 1
+                trace1 -= self.NS
+            if self.board[trace2] == color:
+                count += 1
+                trace2 += self.NS
+        if count >= 5:
+            return True
+
+        #Check Up-Right
+        trace1 = point + self.NS - 1
+        trace2 = point - self.NS + 1
+        count = 1
+        while (self.board[trace1] == color or self.board[trace2] == color):
+            # trace in both directions
+
+            #DEBUG - remove later
+            print(trace1)
+            print(trace2)
+            
+            if self.board[trace1] == color:
+                count += 1
+                #DEBUG - remove later
+                print(count)
+                trace1 += self.NS - 1
+            if self.board[trace2] == color:
+                count += 1
+                #DEBUG - remove later
+                print(count)
+                trace2 -= self.NS + 1 
+        if count >= 5:
+            return True
+
+        #Check Down-Left
+        trace1 = point + self.NS + 1
+        trace2 = point - self.NS - 1
+        count = 1
+        while (self.board[trace1] == color or self.board[trace2] == color):
+            # trace in both directions
+
+            #DEBUG - remove later
+            #print(trace1)
+            #print(trace2)
+            if self.board[trace1] == color:
+                count += 1
+                trace1 += (self.NS + 1)
+                #DEBUG - remove later
+                print(trace1)
+            if self.board[trace2] == color:
+                count += 1
+                trace2 -= (self.NS - 1)
+                #DEBUG - remove later
+                print(trace2)
+        if count >= 5:
+            return True
+
         return False
 
     def is_eye(self, point, color):

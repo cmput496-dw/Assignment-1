@@ -244,9 +244,9 @@ class GtpConnection():
             self.respond("unknown")
         elif self.game_status == "draw":
             self.respond("draw")
-        elif self.game_status == "black":
+        elif self.game_status == "b":
             self.respond("black")
-        elif self.game_status == "white":
+        elif self.game_status == "w":
             self.respond("white")
             
     def play_cmd(self, args):
@@ -280,11 +280,15 @@ class GtpConnection():
                 self.debug_msg("Move: {}\nBoard:\n{}\n".
                                 format(board_move, self.board2d()))
             #check to see if the move filled the board
-            move = self.go_engine.get_move(self.board, color)
-            move_coord = point_to_coord(move, self.board.size)
-            move_as_string = format_point(move_coord)
-            if move == False:
-                self.game_status = "draw"
+            check = self.go_engine.get_move(self.board, color)
+            check_coord = point_to_coord(check, self.board.size)
+            check_as_string = format_point(check_coord)
+            if not self.game_status == "black" or not self.game_status == "white":
+                if check == False:
+                    self.game_status = "draw"
+            #check to see if move played was a win
+            if self.board.search_for_five(move, color_to_int(board_color)):
+                self.game_status = board_color
             self.respond()
         except Exception as e:
             self.respond('{}'.format(str(e)))
@@ -307,8 +311,12 @@ class GtpConnection():
             check = self.go_engine.get_move(self.board, color)
             check_coord = point_to_coord(check, self.board.size)
             check_as_string = format_point(check_coord)
-            if check == False:
-                self.game_status = "draw"
+            if not self.game_status == "black" or not self.game_status == "white":
+                if check == False:
+                    self.game_status = "draw"
+            #check to see if move played was a win
+            if self.board.search_for_five(move, color_to_int(board_color)):
+                self.game_status = board_color
             self.respond(move_as_string)
         else:
             self.respond("Illegal move: {}".format(move_as_string))
