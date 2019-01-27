@@ -208,7 +208,6 @@ class GtpConnection():
         moves = GoBoardUtil.generate_legal_moves(self.board)
         gtp_moves = []
         if not self.game_status == "ongoing":
-            print(self.game_status)
             self.respond("")
             return
         for move in moves:
@@ -413,7 +412,7 @@ def move_to_coord(point_str, board_size):
     if not 2 <= board_size <= MAXSIZE:
         raise ValueError("board_size out of range")
     s = point_str.lower()
-    print(s)
+    
     if s == "pass":
         return PASS
     try:

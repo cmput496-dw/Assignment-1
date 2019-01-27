@@ -130,20 +130,11 @@ class SimpleGoBoard(object):
         count = 1
         while (self.board[trace1] == color or self.board[trace2] == color):
             # trace in both directions
-
-            #DEBUG - remove later
-            print(trace1)
-            print(trace2)
-            
             if self.board[trace1] == color:
                 count += 1
-                #DEBUG - remove later
-                print(count)
                 trace1 += self.NS - 1
             if self.board[trace2] == color:
                 count += 1
-                #DEBUG - remove later
-                print(count)
                 trace2 -= self.NS + 1 
         if count >= 5:
             return True
@@ -154,22 +145,14 @@ class SimpleGoBoard(object):
         count = 1
         while (self.board[trace1] == color or self.board[trace2] == color):
             # trace in both directions
-
-            #DEBUG - remove later
-            #print(trace1)
-            #print(trace2)
             if self.board[trace1] == color:
                 count += 1
                 temp1 = self.NS + 1
                 trace1 += temp1
-                #DEBUG - remove later
-                print("trace1 =", trace1)
             if self.board[trace2] == color:
                 count += 1
                 temp2 = self.NS + 1
                 trace2 -= temp2
-                #DEBUG - remove later
-                print("trace2 =", trace2)
         if count >= 5:
             return True
 
