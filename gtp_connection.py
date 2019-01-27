@@ -167,6 +167,7 @@ class GtpConnection():
     def clear_board_cmd(self, args):
         """ clear the board """
         self.reset(self.board.size)
+        self.game_status = "ongoing"
         self.respond()
 
     def boardsize_cmd(self, args):
@@ -206,6 +207,10 @@ class GtpConnection():
         #color = color_to_int(board_color)
         moves = GoBoardUtil.generate_legal_moves(self.board)
         gtp_moves = []
+        if not self.game_status == "ongoing":
+            print(self.game_status)
+            self.respond("")
+            return
         for move in moves:
             coords = point_to_coord(move, self.board.size)
             gtp_moves.append(format_point(coords))
@@ -299,6 +304,14 @@ class GtpConnection():
         board_color = args[0].lower()
         if not board_color == 'w' and not board_color == 'b':
             self.respond('illegal move: "' + board_color + '" wrong color')
+            return
+
+        #check to see if opponent has victory
+        if self.game_status == "b" and board_color == "w":
+            self.respond("resign")
+            return
+        elif self.game_status == "w" and board_color == "b":
+            self.respond("resign")
             return
         color = color_to_int(board_color)
         move = self.go_engine.get_move(self.board, color)
