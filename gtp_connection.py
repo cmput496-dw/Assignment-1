@@ -426,7 +426,7 @@ def move_to_coord(point_str, board_size):
         if row < 1:
             raise ValueError
     except (IndexError, ValueError):
-        raise ValueError("invalid point: '{}'".format(s))
+        raise ValueError('illegal move: "{}" wrong coordinate'.format(s))
     if not (col <= board_size and row <= board_size):
         raise ValueError('illegal move: "{}" wrong coordinate'.format(s))
     return row, col
