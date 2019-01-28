@@ -138,10 +138,6 @@ class SimpleGoBoard(object):
                 count += 1
                 temp2 = self.NS - 1
                 trace2 -= temp2
-        #DEBUG - remove later
-        print("trace1 =", trace1)
-        print("trace2 =", trace2)
-        print("count:",count)
         if count >= 5:
             return True
 
