@@ -1,4 +1,4 @@
-# Gomoku Project
+# Gomoku Project - Assignment 1
 This is our Gomoku assignment for CMPUT-496 at the University of Alberta.
 
 ## Developers
